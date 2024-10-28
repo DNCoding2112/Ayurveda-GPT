@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../App.css';
 import '../styles/ResourcesPage.css';
+import Loading from './Loading';
 
 const Resources = () => {
     const [suggestion, setSuggestion] = useState('');
+    const [loading, setLoading] = useState(true);
+    const location = useLocation();
+
+    useEffect(() => {//loading functionality
+        setLoading(true);
+        const timeout = setTimeout(() => setLoading(false), 300);
+        return () => clearTimeout(timeout);
+    }, [location]);
 
     const resourcesData = {
         'Ayurveda Basics': [
@@ -62,7 +72,7 @@ const Resources = () => {
         setSuggestion('');
     };
 
-    return (
+    return loading ? <Loading /> : (
         <div className="resources-section">
             <h1>Resources</h1>
             <p>Explore valuable resources on Ayurveda, AI in Healthcare, and more:</p>

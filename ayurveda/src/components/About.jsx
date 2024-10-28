@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
+import Loading from './Loading';
 
 const About = () => {
-    return (
+    const [loading, setLoading] = useState(true);//added check for page loaded
+
+    useEffect(() => {//loading functionality with timeout to ensure it happens smoothly and in sync
+        const timeout = setTimeout(() => {
+            setLoading(false);
+        }, 300);
+
+        return () => clearTimeout(timeout);
+    }, []);
+
+    return loading ? (
+        <Loading />
+    ) : (
         <div className="about-section">
             <h1>About Us</h1>
             <p>
